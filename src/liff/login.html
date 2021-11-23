@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>連結至 Google Sheets</title>
+
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        button {
+            flex: 0 0 50px;
+            width: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <button id="button">send test message</button> -->
+    <button id="connect-google">連結至 Google Sheets</button>
+
+    <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
+    <script>
+        const url = '<%- url %>';
+
+        // https://developers.line.biz/en/reference/liff/#send-messages
+
+        function initializeLiff(myLiffId) {
+            liff
+                .init({
+                    liffId: myLiffId,
+                })
+                .then(() => {
+                    console.log('LIFF init success!');
+                    // setButtonHandler();
+                })
+                .catch((err) => {
+                    console.log(`error: ${JSON.stringify(err)}`);
+                });
+        }
+
+        // function setButtonHandler() {
+        //     const connectGoogle = document.querySelector('#connect-google');
+        //     connectGoogle.addEventListener('click', () => {
+        //         liff.openWindow({
+        //             url: url,
+        //             external: true
+        //         });
+        //     });
+        // }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch(`/send-id`)
+                .then((reqResponse) => reqResponse.json())
+                .then((jsonResponse) => {
+                    let myLiffId = jsonResponse.id;
+                    initializeLiff(myLiffId);
+                })
+                .catch((err) => {
+                    alert(`error: ${JSON.stringify(err)}`);
+                });
+        });
+
+        const connectGoogle = document.querySelector('#connect-google');
+        connectGoogle.addEventListener('click', () => {
+            liff.openWindow({
+                url: url,
+                external: true
+            });
+        });
+    </script>
+</body>
+
+</html>
