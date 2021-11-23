@@ -10,7 +10,7 @@ async function checkGoogleSheetLink(context, { next }) {
 }
 
 async function askAuthCode(context) {
-  const url = `https://liff.line.me/${process.env.LINE_LIFF_ID}/settings`;
+  const url = `https://liff.line.me/${process.env.LINE_LIFF_ID}`;
   const altText = '請點擊下方連結啟用 Google Sheet 訊息同步功能';
   await context.sendFlex(altText, {
     type: 'bubble',

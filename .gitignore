@@ -62,4 +62,5 @@ typings/
 # dotenv environment variables file
 .env
 
-src/*.json
+src/sheetId.json
+src/token.json
